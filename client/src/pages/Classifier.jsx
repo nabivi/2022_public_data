@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/NavBar';
 import Footer from '../components/Footer';
-import ClassifierImg from '../assets/classifier.png'
-import CrossMark from '../assets/cross.png'
+import ClassifierImg from '../assets/classifier.png';
+import CrossMark from '../assets/cross.png';
+import AfterClassify from '../assets/after.png';
 import { useEffect } from 'react';
 import axios from 'axios'
 
@@ -10,6 +12,7 @@ function ClassifierPage () {
   const [fileImage, setFileImage] = useState('');
   const [fileData, setFileData] = useState();
   const [existImage, setExistImage] = useState(false);
+  const [label, setLabel] = useState('');
 
   useEffect(() => {
     if (fileImage) {
@@ -24,23 +27,18 @@ function ClassifierPage () {
 
     let formData = new FormData();
     formData.append('image', fileData);
-    /*
-    axios.post('http://localhost:8000/predict', {image: fileData})
+
+    axios.post('http://127.0.0.1:8000/predict', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
     .then((res) => {
-      console.log(res.label);
+      console.log(res.data.label);
+      setLabel(res.data.label);
     })
     .catch((err) => {
-      console.log(err);
-    })
-    */
-   axios.post('http://127.0.0.1:8000/predict', formData, {headers: {
-    'Content-Type': 'multipart/form-data'
-   }})
-   .then((res) => {
-     console.log(res.data.label);
-   })
-   .catch((err) => {
-     console.log(err)
+      console.log(err)
    })
   }
 
@@ -48,7 +46,9 @@ function ClassifierPage () {
     <div className='w-full h-fit min-h-screen flex flex-col gap-8 justify-between items-center'>
       <Navbar />
       <div className='w-full h-fit max-w-md flex flex-col items-center gap-5'>
-        <img src={ClassifierImg} className='w-[250px]' />
+        {label == '' ?
+        <img src={ClassifierImg} className='w-[250px]' /> :
+        <img src={AfterClassify} className='w-[250px]' />}
         <form
           onSubmit={handleSubmit}
           className='w-full px-5 flex flex-col gap-5 items-center'>
@@ -75,10 +75,27 @@ function ClassifierPage () {
             id='submit'
             className='hidden' />
           <img src={fileImage} className='w-full'/>
-          {existImage ?
+          {existImage && label == '' ?
             <div onClick={(e) => setFileImage('')}>
               <img src={CrossMark} className='w-4' />
             </div> :
+            label != '' ?
+            <div className='flex flex-col gap-6 items-center'>
+              <div className='w-fit h-fit text-lg text-black'>
+                {'이 쓰레기는 ' + label + '(으)로 버려 주세요!'}
+              </div>
+              <div className='flex gap-4 w-fit'>
+                <button className='btn btn-primary text-white'>
+                  버렸어요!
+                </button>
+                <Link to='/'>
+                  <button className='btn btn-outline btn-primary'>
+                    홈으로
+                  </button>
+                </Link>
+              </div>
+            </div>
+             :
             <></>
           }
           
