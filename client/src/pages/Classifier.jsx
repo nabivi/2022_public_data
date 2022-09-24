@@ -4,9 +4,11 @@ import Footer from '../components/Footer';
 import ClassifierImg from '../assets/classifier.png'
 import CrossMark from '../assets/cross.png'
 import { useEffect } from 'react';
+import axios from 'axios'
 
 function ClassifierPage () {
   const [fileImage, setFileImage] = useState('');
+  const [fileData, setFileData] = useState();
   const [existImage, setExistImage] = useState(false);
 
   useEffect(() => {
@@ -20,6 +22,13 @@ function ClassifierPage () {
   function handleSubmit (e) {
     e.preventDefault();
     console.log(fileImage);
+    axios.post('http://localhost:8000/predict', {image: fileData})
+    .then((res) => {
+      console.log(res.label);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   return (
@@ -40,11 +49,13 @@ function ClassifierPage () {
           }
           <input
             type='file'
-            name='file'
+            name='image'
             id='file'
             accept='image/*'
             className='hidden'
-            onChange={(e) => setFileImage(URL.createObjectURL(e.target.files[0]))} />
+            onChange={(e) => {
+              setFileImage(URL.createObjectURL(e.target.files[0]))
+              setFileData(e.target.files[0])}} />
           <input 
             type='submit'
             name='submit'
