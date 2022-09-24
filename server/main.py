@@ -1,7 +1,5 @@
-from crypt import methods
 from urllib import response
 import torch
-import flask
 from flask import Flask, request, render_template
 #import joblib
 import numpy as np
