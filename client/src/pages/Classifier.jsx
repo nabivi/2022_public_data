@@ -28,7 +28,7 @@ function ClassifierPage () {
     let formData = new FormData();
     formData.append('image', fileData);
 
-    axios.post('http://127.0.0.1:8000/predict', formData, {
+    axios.post('https://cseht.loca.lt/predict', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -85,7 +85,8 @@ function ClassifierPage () {
                 {'이 쓰레기는 ' + label + '(으)로 버려 주세요!'}
               </div>
               <div className='flex gap-4 w-fit'>
-                <button className='btn btn-primary text-white'>
+                <button
+                  className='btn btn-primary text-white'>
                   버렸어요!
                 </button>
                 <Link to='/'>
