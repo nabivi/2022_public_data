@@ -1,24 +1,17 @@
-from urllib import response
 import torch
-from flask import Flask, request, render_template
-#import joblib
-import numpy as np
-from scipy import misc
-import torch.nn as nn
-import torchvision.models as models
-from torchvision.datasets import ImageFolder
-import torchvision.transforms as transforms
+import platform
 from PIL import Image
-from pathlib import Path
-import matplotlib.pyplot as plt
+import torch.nn as nn
 from flask import jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
+from flask import Flask, request
+import torchvision.models as models
+import torchvision.transforms as transforms
 
 app = Flask(__name__)
 CORS(app)
 
 transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
-
 dataset = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
 class ImageClassificationBase(nn.Module):
@@ -60,8 +53,6 @@ class ResNet(ImageClassificationBase):
 
 model = ResNet()
 
-
-
 def to_device(data, device):
     """Move tensor(s) to chosen device"""
     if isinstance(data, (list,tuple)):
@@ -84,16 +75,9 @@ def predict_image(img, model):
     prob, preds  = torch.max(yb, dim=1)
     # Retrieve the class label
     return dataset[preds[0].item()]
-  
-
-
 
 # 메인 페이지 라우팅
-#@app.route("/")
 @app.route("/index")
-# def index():
-    # return flask.render_template('index.html')
-
 
 # 데이터 예측 처리
 @app.route('/predict', methods=['POST'])
@@ -115,20 +99,17 @@ def make_prediction():
         res_body = {'label': prediction}
         return jsonify(res_body)
 
-
 if __name__ == '__main__':
 
     device = get_default_device() 
     
     # 모델 로드
-    # ml/model.py 선 실행 후 생성
-    
-    #이건 우리 새 코드
-    #model.pt 경로 확인해주기
-    loaded_model = torch.load('../model/model.pt', map_location=torch.device('cpu'))
-    #####아래는 기존 모델 불러오는 코드 #########
-    #model = torch.load('./model/model.pt')
-   
-   
+    # 윈도우/유닉스에 따른 모델 경로 변경
+    model_path = 'server/model.pt'
+    if platform.system() == 'Windows':
+        model_path.replace('/', '\\')
+
+    loaded_model = torch.load(model_path, map_location=torch.device('cpu'))
+
     # Flask 서비스 스타트
     app.run(host='0.0.0.0', port=8000, debug=True)
