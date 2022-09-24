@@ -1,3 +1,5 @@
+from crypt import methods
+from urllib import response
 import torch
 import flask
 from flask import Flask, request, render_template
@@ -11,8 +13,11 @@ import torchvision.transforms as transforms
 from PIL import Image
 from pathlib import Path
 import matplotlib.pyplot as plt
+from flask import jsonify
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 
 transformations = transforms.Compose([transforms.Resize((256, 256)), transforms.ToTensor()])
 
@@ -86,33 +91,31 @@ def predict_image(img, model):
 
 
 # 메인 페이지 라우팅
-@app.route("/")
+#@app.route("/")
 @app.route("/index")
-def index():
-    return flask.render_template('index.html')
+# def index():
+    # return flask.render_template('index.html')
 
 
 # 데이터 예측 처리
 @app.route('/predict', methods=['POST'])
 def make_prediction():
     if request.method == 'POST':
-
         # 업로드 파일 처리 분기
         file = request.files['image']
-        if not file: return render_template('index.html', label="No Files")
-
+        if not file: return 'none'
+        
         #업로드 받은 사진 처리
-        image = file
-
+        image = Image.open(file)
+        
         #이미지 변환
         example_image = transformations(image)
-
-        #모델을 통해 예측
-
-
+        
+        # 모델을 통해 예측
         prediction = predict_image(example_image, loaded_model)
-        return {label: prediction}
-        #return render_template('index.html', label=prediction)
+        
+        res_body = {'label': prediction}
+        return jsonify(res_body)
 
 
 if __name__ == '__main__':
@@ -124,7 +127,7 @@ if __name__ == '__main__':
     
     #이건 우리 새 코드
     #model.pt 경로 확인해주기
-    loaded_model = torch.load('./model/model.pt') 
+    loaded_model = torch.load('../model/model.pt', map_location=torch.device('cpu'))
     #####아래는 기존 모델 불러오는 코드 #########
     #model = torch.load('./model/model.pt')
    
