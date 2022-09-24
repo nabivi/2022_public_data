@@ -21,7 +21,10 @@ function ClassifierPage () {
 
   function handleSubmit (e) {
     e.preventDefault();
-    console.log(fileImage);
+
+    let formData = new FormData();
+    formData.append('image', fileData);
+    /*
     axios.post('http://localhost:8000/predict', {image: fileData})
     .then((res) => {
       console.log(res.label);
@@ -29,6 +32,16 @@ function ClassifierPage () {
     .catch((err) => {
       console.log(err);
     })
+    */
+   axios.post('http://127.0.0.1:8000/predict', formData, {headers: {
+    'Content-Type': 'multipart/form-data'
+   }})
+   .then((res) => {
+     console.log(res.data.label);
+   })
+   .catch((err) => {
+     console.log(err)
+   })
   }
 
   return (
