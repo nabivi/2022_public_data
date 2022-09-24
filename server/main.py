@@ -111,7 +111,8 @@ def make_prediction():
 
 
         prediction = predict_image(example_image, loaded_model)
-        return render_template('index.html', label=prediction)
+        return {label: prediction}
+        #return render_template('index.html', label=prediction)
 
 
 if __name__ == '__main__':
