@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Clover from '../assets/clover.png'
 
 function Navbar () {
@@ -11,7 +12,7 @@ function Navbar () {
         <img src={Clover} className='h-6' />
         <p>{point}</p>
       </div>
-      <p>로그인</p>
+      <Link to='/login'><p>로그인</p></Link>
     </div>
   )
 
