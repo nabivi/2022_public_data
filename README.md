@@ -2,6 +2,7 @@
 
 ### 팀명 : 2019
 ### 산출물 명 : D-Eco
+![로고](https://user-images.githubusercontent.com/51317791/192133999-47067eb0-c6b9-441a-b2f6-9dcccb5f5c83.png)
 
 ### 특별세션 - 일회용품, 재활용 쓰레기
 
