@@ -2,11 +2,10 @@ import torch
 import platform
 from PIL import Image
 import torch.nn as nn
-from flask import jsonify
 from flask_cors import CORS
-from flask import Flask, request
 import torchvision.models as models
 import torchvision.transforms as transforms
+from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 CORS(app)
@@ -76,6 +75,11 @@ def predict_image(img, model):
     # Retrieve the class label
     return dataset[preds[0].item()]
 
+# 분류기 웹사이트 가는 버튼
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 # 메인 페이지 라우팅
 @app.route("/index")
 
@@ -105,7 +109,7 @@ if __name__ == '__main__':
     
     # 모델 로드
     # 윈도우/유닉스에 따른 모델 경로 변경
-    model_path = 'server/model.pt'
+    model_path = 'model/model.pt'
     if platform.system() == 'Windows':
         model_path.replace('/', '\\')
 
