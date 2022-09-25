@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/NavBar';
-import { auth } from '../../Firebase';
+import { auth, db } from '../../Firebase';
 import { useNavigate } from 'react-router-dom';
 
 function SignupPage () {
@@ -15,7 +15,17 @@ function SignupPage () {
       let data;
       data = await auth.createUserWithEmailAndPassword(email, password);
       console.log(data);
-      navigate('/login');
+      db.collection('point').doc(email).set({
+        id: email,
+        point: 0
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      navigate('/');
       
     } catch(error) {
       console.log(error);

@@ -8,11 +8,12 @@ import AfterClassify from '../assets/after.png';
 import { useEffect } from 'react';
 import axios from 'axios'
 
-function ClassifierPage () {
+function ClassifierPage (props) {
   const [fileImage, setFileImage] = useState('');
   const [fileData, setFileData] = useState();
   const [existImage, setExistImage] = useState(false);
   const [label, setLabel] = useState('');
+  const [isThrowed, setIsThrowed] = useState(false);
 
   useEffect(() => {
     if (fileImage) {
@@ -42,9 +43,17 @@ function ClassifierPage () {
    })
   }
 
+  function handleThrowClick (e) {
+    if (isThrowed) {
+      window.alert('이미 포인트를 받았습니다!');
+    } else {
+      setIsThrowed(true);
+    }
+  }
+
   return (
     <div className='w-full h-fit min-h-screen flex flex-col gap-8 justify-between items-center'>
-      <Navbar />
+      <Navbar click={isThrowed}/>
       <div className='w-full h-fit max-w-md flex flex-col items-center gap-5'>
         {label == '' ?
         <img src={ClassifierImg} className='w-[250px]' /> :
@@ -86,6 +95,7 @@ function ClassifierPage () {
               </div>
               <div className='flex gap-4 w-fit'>
                 <button
+                  onClick={handleThrowClick}
                   className='btn btn-primary text-white'>
                   버렸어요!
                 </button>
