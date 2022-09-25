@@ -47,6 +47,7 @@ function ClassifierPage (props) {
     if (isThrowed) {
       window.alert('이미 포인트를 받았습니다!');
     } else {
+      window.alert('행복 포인트 적립!');
       setIsThrowed(true);
     }
   }
