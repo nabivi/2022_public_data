@@ -109,7 +109,7 @@ if __name__ == '__main__':
     
     # 모델 로드
     # 윈도우/유닉스에 따른 모델 경로 변경
-    model_path = 'model/model.pt'
+    model_path = '../model/model.pt'
     if platform.system() == 'Windows':
         model_path.replace('/', '\\')
 

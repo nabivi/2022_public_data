@@ -10,17 +10,28 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.14",
+    "aos": "^2.3.4",
     "axios": "^0.27.2",
     "daisyui": "^2.31.0",
     "firebase": "^8.10.1",
     "firebase-tools": "^11.10.0",
+    "fullpage.js": "^2.9.6",
+    "jquery": "^3.6.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-full-page": "^0.1.12",
     "react-router-dom": "^6.4.1",
+    "react-toastify": "^9.1.1",
+    "swiper": "^8.4.4",
     "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
+    "@types/jquery": "^3.5.14",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",

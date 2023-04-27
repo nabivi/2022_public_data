@@ -34,9 +34,9 @@ function SignupPage () {
   }
 
   return (
-    <div className='w-full h-screen flex flex-col justify-between items-center'>
+    <div className='w-full h-screen flex flex-col items-center'>
       <Navbar />
-      <div className='w-full h-fit max-w-md p-5'>
+      <div className='flex justify-center items-center w-full h-full max-w-md p-5'>
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-3'>
           <input
             type="text"
@@ -53,10 +53,9 @@ function SignupPage () {
             onChange={(e) => setPassword(e.target.value)}
             className="input input-bordered w-64" />
           <input
-            type='submit' value='회원가입' className='btn w-64 mt-3 text-white' />
+            type='submit' value='회원가입' className='btn w-64 mt-3' />
         </form>
       </div>
-      <Footer />
     </div>
   )
 }

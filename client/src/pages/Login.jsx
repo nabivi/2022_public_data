@@ -16,7 +16,7 @@ function LoginPage () {
       let data;
       data = await auth.signInWithEmailAndPassword(email, password);
       console.log(data);
-      navigate('/');
+      navigate('/myinfo');
       
     } catch(error) {
       console.log(error);
@@ -25,9 +25,9 @@ function LoginPage () {
   }
 
   return (
-    <div className='w-full h-screen flex flex-col justify-between items-center'>
+    <div className='w-full h-screen flex flex-col items-center'>
       <Navbar />
-      <div className='w-full h-fit max-w-md p-5'>
+      <div className='flex justify-center items-center w-full h-full max-w-md p-5'>
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-3'>
           <input
             type="text"
@@ -42,13 +42,12 @@ function LoginPage () {
             onChange={(e) => setPassword(e.target.value)}
             className="input input-bordered w-64" />
           <input
-            type='submit' value='로그인' className='btn btn-secondary w-64 mt-3 text-white' />
+            type='submit' value='로그인' className='btn btn-secondary w-64 mt-3' />
           <Link to='/signup'>
             <button className='btn btn-ghost w-64'>회원가입</button>
           </Link>
         </form>
       </div>
-      <Footer />
     </div>
   )
 }

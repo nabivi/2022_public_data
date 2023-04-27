@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
   },
   daisyui: {
-    themes: ['autumn'],
+    themes: ['pastel'],
   },
   plugins: [require('daisyui'), require('@tailwindcss/line-clamp')],
 }

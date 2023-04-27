@@ -1,0 +1,81 @@
+@font-face {
+  font-family: 'LINESeedKR-Bd';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+.scroll-container {
+  width: 100%;
+  height: 92vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory; /* 부모 적용 */
+}
+ 
+.scroll-area {
+  width: 100%;
+  height: 92vh;
+  scroll-snap-align: start; /* 자식 적용 */
+}
+ 
+ 
+/* 여기서부턴 단순 꾸미기 */
+html {
+  scroll-behavior: smooth;
+}
+ 
+.scroll-container,
+.scroll-area {
+  margin: 0 auto;
+  font-family: 'LINESeedKR-Bd';
+}
+
+.font-area {
+  font-family: 'LINESeedKR-Bd';
+}
+ 
+.scroll-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-scroll,
+.icon-scroll:before {
+  position: absolute;
+  left: 50%;
+}
+
+.icon-scroll {
+  width: 40px;
+  height: 70px;
+  margin-left: -20px;
+  top: 90%;
+  margin-top: -35px;
+  box-shadow: inset 0 0 0 2px #cdcdcd;
+  border-radius: 25px;
+}
+
+.icon-scroll:before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #cdcdcd;
+  margin-left: -4px;
+  top: 8px;
+  border-radius: 4px;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-name: scroll;
+}
+
+@keyframes scroll {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(46px);
+  }
+}
